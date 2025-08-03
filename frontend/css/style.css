@@ -2,13 +2,13 @@
 
 /* Variáveis de Cores e Fontes */
 :root {
-    --primary-color: #1a1a1a; /* Preto suave */
-    --secondary-color: #fdfdfd; /* Branco */
-    --accent-color: #c5a47e; /* Dourado/Bege */
-    --text-color: #333; /* Cinza escuro para texto */
-    --bg-color: #f9f6f2; /* Fundo levemente bege */
-    --font-primary: 'Playfair Display', serif; /* Fonte para títulos */
-    --font-secondary: 'Montserrat', sans-serif; /* Fonte para corpo de texto */
+    --primary-color: #1a1a1a;
+    --secondary-color: #fdfdfd;
+    --accent-color: #c5a47e;
+    --text-color: #333;
+    --bg-color: #f9f6f2;
+    --font-primary: 'Playfair Display', serif;
+    --font-secondary: 'Montserrat', sans-serif;
 }
 
 /* --- Reset Básico e Estilos Globais --- */
@@ -25,15 +25,64 @@ body {
     line-height: 1.6;
 }
 
-/* --- Cabeçalho --- */
+/* --- Cabeçalho e Carrossel --- */
 .main-header {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1594035918253-12586b595473?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGVyZnVtZXx8fHx8fDE3MjI3MDAyMDU&ixlib=rb-4.0.3&q=80&w=1080');
-    background-size: cover;
-    background-position: center;
+    position: relative;
     color: var(--secondary-color);
     text-align: center;
-    padding: 5rem 1rem;
-    animation: fadeIn 1s ease-in-out;
+    height: 60vh; /* Altura do cabeçalho */
+    min-height: 400px;
+    overflow: hidden; /* Esconde partes dos slides que saem da área */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-slides {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.carousel-slide.active {
+    opacity: 1; /* Slide ativo fica visível */
+}
+
+/* Sobreposição escura para melhorar a legibilidade do texto */
+.carousel-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.header-content {
+    position: relative;
+    z-index: 3; /* Fica acima dos slides e da sobreposição */
+    animation: fadeIn 1.5s ease-in-out;
+    padding: 1rem;
 }
 
 .brand-title {
@@ -46,6 +95,34 @@ body {
     font-weight: 400;
     font-size: 1.1rem;
 }
+
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    gap: 10px;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-dot:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.carousel-dot.active {
+    background-color: var(--secondary-color);
+}
+
 
 /* --- Seção de Produtos --- */
 .products-section {
@@ -64,7 +141,7 @@ body {
 
 .product-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Mobile-first: 1 coluna */
+    grid-template-columns: 1fr;
     gap: 1.5rem;
 }
 
@@ -93,7 +170,7 @@ body {
     padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Faz com que esta div ocupe o espaço restante */
+    flex-grow: 1;
 }
 
 .product-name {
@@ -101,6 +178,12 @@ body {
     font-size: 1.4rem;
     margin-bottom: 0.5rem;
     color: var(--primary-color);
+}
+
+.product-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    flex-grow: 1;
 }
 
 .product-price {
@@ -121,7 +204,7 @@ body {
     font-weight: 700;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
-    margin-top: auto; /* Empurra o botão para o final do card */
+    margin-top: auto;
 }
 
 .add-to-cart-btn:hover {
@@ -136,7 +219,7 @@ body {
     border-radius: 50%;
     border-left-color: var(--primary-color);
     animation: spin 1s ease infinite;
-    margin: 4rem auto; /* Centraliza o spinner na grade */
+    margin: 4rem auto;
 }
 
 @keyframes spin {
@@ -192,27 +275,27 @@ body {
 }
 
 .whatsapp-checkout-button {
-    background-color: #25D366; /* Cor oficial do WhatsApp */
+    background-color: #25D366;
     color: white;
     bottom: 20px;
     opacity: 0;
     transform: scale(0.5);
-    pointer-events: none; /* Desabilita cliques quando invisível */
+    pointer-events: none;
 }
 
 .whatsapp-checkout-button.visible {
     opacity: 1;
     transform: scale(1);
-    pointer-events: auto; /* Habilita cliques quando visível */
+    pointer-events: auto;
 }
 
 /* --- Media Queries para Responsividade --- */
 @media (min-width: 600px) {
-    .product-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
     .brand-title {
         font-size: 3.5rem;
+    }
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 

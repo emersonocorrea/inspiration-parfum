@@ -1,6 +1,46 @@
 // js/ui.js
 
 /**
+ * Renderiza o carrossel no cabeçalho da página com os 3 primeiros produtos.
+ * @param {Array<object>} products - A lista completa de produtos.
+ */
+function renderHeaderCarousel(products) {
+    const slidesContainer = document.getElementById('header-carousel-slides');
+    const dotsContainer = document.getElementById('header-carousel-dots');
+    if (!slidesContainer || !dotsContainer) return;
+
+    // Pega os 3 primeiros produtos para o carrossel
+    const carouselProducts = products.slice(0, 3);
+
+    slidesContainer.innerHTML = '';
+    dotsContainer.innerHTML = '';
+
+    carouselProducts.forEach((product, index) => {
+        // Cria o slide
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        // Define a imagem de fundo do slide
+        slide.style.backgroundImage = `url(${product.image_url})`;
+        // O primeiro slide começa como ativo
+        if (index === 0) {
+            slide.classList.add('active');
+        }
+        slidesContainer.appendChild(slide);
+
+        // Cria o ponto de navegação
+        const dot = document.createElement('span');
+        dot.className = 'carousel-dot';
+        dot.dataset.slideTo = index; // Armazena o índice do slide correspondente
+        // O primeiro ponto começa como ativo
+        if (index === 0) {
+            dot.classList.add('active');
+        }
+        dotsContainer.appendChild(dot);
+    });
+}
+
+
+/**
  * Renderiza a lista de produtos na grade da página.
  * @param {Array<object>} products - A lista de produtos a ser renderizada.
  */
@@ -8,7 +48,6 @@ function renderProducts(products) {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
 
-    // Limpa o conteúdo atual da grade (incluindo o spinner)
     grid.innerHTML = '';
 
     if (!products || products.length === 0) {
@@ -21,7 +60,6 @@ function renderProducts(products) {
         card.className = 'product-card';
         card.dataset.productId = product.id;
 
-        // Converte o preço para o formato de moeda brasileiro
         const formattedPrice = Number(product.price).toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL'
@@ -37,9 +75,8 @@ function renderProducts(products) {
             </div>
         `;
 
-        // Adiciona o evento de clique diretamente ao botão do card criado
         card.querySelector('.add-to-cart-btn').addEventListener('click', (event) => {
-            event.stopPropagation(); // Impede a propagação do evento
+            event.stopPropagation();
             addToCart(product);
         });
 
@@ -58,7 +95,6 @@ function updateCartUI() {
 
     if (cartCountElement) {
         cartCountElement.textContent = totalItems;
-        // Adiciona uma pequena animação ao atualizar
         cartCountElement.style.transform = 'scale(1.2)';
         setTimeout(() => {
             cartCountElement.style.transform = 'scale(1)';
@@ -66,7 +102,6 @@ function updateCartUI() {
     }
 
     if (whatsappButton) {
-        // Adiciona ou remove a classe 'visible' para controlar a animação de aparição
         if (totalItems > 0) {
             whatsappButton.classList.add('visible');
         } else {
