@@ -64,7 +64,7 @@ function setupWhatsAppButton() {
     const whatsappBtn = document.getElementById('whatsapp-checkout');
     if (!whatsappBtn) return;
 
-    const phoneNumber = '5511912345678'; // SUBSTITUA PELO SEU NÚMERO
+    const phoneNumber = '5521980911176'; // SUBSTITUA PELO SEU NÚMERO
 
     whatsappBtn.addEventListener('click', (event) => {
         event.preventDefault();
