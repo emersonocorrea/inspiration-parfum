@@ -1,0 +1,223 @@
+/* css/style.css */
+
+/* Variáveis de Cores e Fontes */
+:root {
+    --primary-color: #1a1a1a; /* Preto suave */
+    --secondary-color: #fdfdfd; /* Branco */
+    --accent-color: #c5a47e; /* Dourado/Bege */
+    --text-color: #333; /* Cinza escuro para texto */
+    --bg-color: #f9f6f2; /* Fundo levemente bege */
+    --font-primary: 'Playfair Display', serif; /* Fonte para títulos */
+    --font-secondary: 'Montserrat', sans-serif; /* Fonte para corpo de texto */
+}
+
+/* --- Reset Básico e Estilos Globais --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-secondary);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* --- Cabeçalho --- */
+.main-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1594035918253-12586b595473?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8cGVyZnVtZXx8fHx8fDE3MjI3MDAyMDU&ixlib=rb-4.0.3&q=80&w=1080');
+    background-size: cover;
+    background-position: center;
+    color: var(--secondary-color);
+    text-align: center;
+    padding: 5rem 1rem;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.brand-title {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.brand-subtitle {
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+/* --- Seção de Produtos --- */
+.products-section {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-family: var(--font-primary);
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    color: var(--primary-color);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile-first: 1 coluna */
+    gap: 1.5rem;
+}
+
+.product-card {
+    background: var(--secondary-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Faz com que esta div ocupe o espaço restante */
+}
+
+.product-name {
+    font-family: var(--font-primary);
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.product-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.add-to-cart-btn {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: var(--font-secondary);
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    margin-top: auto; /* Empurra o botão para o final do card */
+}
+
+.add-to-cart-btn:hover {
+    background-color: var(--accent-color);
+}
+
+/* --- Spinner de Carregamento --- */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: var(--primary-color);
+    animation: spin 1s ease infinite;
+    margin: 4rem auto; /* Centraliza o spinner na grade */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* --- Botões Flutuantes --- */
+.cart-button, .whatsapp-checkout-button {
+    position: fixed;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.cart-button:hover, .whatsapp-checkout-button:hover {
+    transform: scale(1.1);
+}
+
+.cart-button {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    bottom: 90px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border: 2px solid var(--secondary-color);
+}
+
+.whatsapp-checkout-button {
+    background-color: #25D366; /* Cor oficial do WhatsApp */
+    color: white;
+    bottom: 20px;
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none; /* Desabilita cliques quando invisível */
+}
+
+.whatsapp-checkout-button.visible {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto; /* Habilita cliques quando visível */
+}
+
+/* --- Media Queries para Responsividade --- */
+@media (min-width: 600px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .brand-title {
+        font-size: 3.5rem;
+    }
+}
+
+@media (min-width: 900px) {
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
